@@ -1,0 +1,24 @@
+[project]
+name = "stocks"
+version = "0.1.0"
+description = ""
+authors = [
+    {name = "Adam Scherer",email = "adam.scherer@gmail.com"}
+]
+readme = "README.md"
+requires-python = ">=3.12,<4.0"
+dependencies = [
+    "supabase==2.15.0",
+    "python-dotenv>=1.0.0",
+    "pandas>=2.0.0",
+    "requests>=2.31.0",
+    "pydantic>=2.0.0"
+]
+
+[tool.poetry]
+packages = [{include = "src"}]
+
+
+[build-system]
+requires = ["poetry-core>=2.0.0,<3.0.0"]
+build-backend = "poetry.core.masonry.api"
