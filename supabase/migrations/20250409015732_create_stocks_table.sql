@@ -1,29 +1,45 @@
 create table "public"."stocks" (
-    "id" text not null,
+    "cik" character(10) not null,
     "symbol" text not null,
     "security_name" text not null,
-    "exchange" text not null,
-    "market_category" text,
-    "test_issue" boolean default false,
-    "financial_status" text,
-    "round_lot_size" integer default 100,
-    "etf" boolean default false,
-    "next_shares" boolean default false,
-    "cqs_symbol" text,
+    "entity_type" text,
+    "sic" text,
+    "sic_description" text,
+    "owner_org" text,
+    "insider_transaction_for_owner_exists" integer,
+    "insider_transaction_for_issuer_exists" integer,
+    "tickers" text[],
+    "exchanges" text[],
+    "ein" text,
+    "lei" text,
+    "description" text,
+    "website" text,
+    "investor_website" text,
+    "category" text,
+    "fiscal_year_end" text,
+    "state_of_incorporation" text,
+    "state_of_incorporation_description" text,
+    "addresses" jsonb,
+    "phone" text,
+    "flags" text,
+    "former_names" jsonb[],
+    "basic_shares" numeric,
+    "diluted_shares" numeric,
+    "dilution_percentage" numeric,
     "created_at" timestamp with time zone not null default timezone('utc'::text, now()),
     "updated_at" timestamp with time zone not null default timezone('utc'::text, now())
 );
 
 
+CREATE INDEX idx_stocks_entity_type ON public.stocks USING btree (entity_type);
+
+CREATE INDEX idx_stocks_sic ON public.stocks USING btree (sic);
+
 CREATE INDEX idx_stocks_symbol ON public.stocks USING btree (symbol);
 
-CREATE UNIQUE INDEX stocks_pkey ON public.stocks USING btree (id);
-
-CREATE UNIQUE INDEX unique_symbol_exchange ON public.stocks USING btree (symbol, exchange);
+CREATE UNIQUE INDEX stocks_pkey ON public.stocks USING btree (cik);
 
 alter table "public"."stocks" add constraint "stocks_pkey" PRIMARY KEY using index "stocks_pkey";
-
-alter table "public"."stocks" add constraint "unique_symbol_exchange" UNIQUE using index "unique_symbol_exchange";
 
 grant delete on table "public"."stocks" to "anon";
 
